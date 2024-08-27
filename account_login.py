@@ -1,21 +1,51 @@
 import tkinter as tk
 from tkinter import ttk
 import ttkbootstrap as ttk
+    
 
 # create login function
 def create_account():
-    username = retrieved_username.get()
-    password = retrieved_password.get()
-    confirm_password = retrieved_confirm_password.get()
+    try:
+        username_list_create = open('username.txt', 'x')
 
-    if password == confirm_password:
-        created_account = 'You have successfully created your account!'
-    else:
-        created_account = 'Passwords do not match!'
+        try:
+            username_list = open('username.txt', 'a')
 
-    successful.set(created_account)
+            username = retrieved_username.get()
+            password = retrieved_password.get()
+            confirm_password = retrieved_confirm_password.get()
+
+            username_list_txt = open('username.txt', 'r')
+            username_list_read = username_list_txt.read()
+            username_list_txt.close()
+
+            if username == username_list_read:
+
+                print('Username not available')
+            
+            else:
+                username_list.write(username)
+                username_list.close()
+                if password == confirm_password:
+                    created_account = 'You have successfully created your account!'
+                else:
+                    created_account = 'Passwords do not match!'
+
+            successful.set(created_account)
+
+        except UnboundLocalError:
+            already_account_label = ttk.Label(master = root, text = 'An account is already registered with this IP. Try logging in', font = 'Calibri 15') 
+            already_account_label.pack()
+
+    except UnboundLocalError:
+       already_account_label = ttk.Label(master = root, text = 'An account is already registered with this IP. Try logging in', font = 'Calibri 15') 
+       already_account_label.pack()
+
+    except FileExistsError:
+        already_account_label = ttk.Label(master = root, text = 'An account is already registered with this IP. Try logging in', font = 'Calibri 15') 
+        already_account_label.pack()
     
-
+    
 # create window
 root = ttk.Window(themename = 'minty')
 root.title('Account Creation')
@@ -60,5 +90,4 @@ successful = tk.StringVar()
 successful_label = ttk.Label(master = root, text = 'Output', font = 'Calibri 15', textvariable = successful)
 successful_label.pack()
 
-# run program
 root.mainloop()
