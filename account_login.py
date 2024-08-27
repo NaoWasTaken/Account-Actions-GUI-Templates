@@ -3,7 +3,6 @@ from tkinter import ttk
 import ttkbootstrap as ttk
     
 
-# create login function
 def create_account():
     try:
         username_list_create = open('username.txt', 'x')
@@ -46,13 +45,11 @@ def create_account():
         already_account_label.pack()
     
     
-# create window
 root = ttk.Window(themename = 'minty')
 root.title('Account Creation')
 root.geometry('600x350')
 root.resizable(width = False, height = False)
 
-# create widgits
 title = ttk.Label(master = root, text = 'Create Account', font = 'Calibri 21 bold')
 title.pack(pady = 5)
 
